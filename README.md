@@ -8,6 +8,7 @@ This project made to combine some pretty beautiful thing together
 * Sentry as APM
 * [sirupsen/logrus](github.com/sirupsen/logrus) as base of logging
 * [ilyakaznacheev/cleanenv](github.com/ilyakaznacheev/cleanenv) for managing configurations
+* [slok/go-http-metrics](github.com/slok/go-http-metrics) as middleware for exporting prometheus metrics
 
 ## Project files structure
 * will be here soon
