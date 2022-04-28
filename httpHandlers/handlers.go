@@ -11,6 +11,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/rs/cors"
 	metrics "github.com/slok/go-http-metrics/metrics/prometheus"
 	"github.com/slok/go-http-metrics/middleware"
 	middlewarestd "github.com/slok/go-http-metrics/middleware/std"
@@ -53,5 +54,6 @@ func RunServer() {
 	go func() {
 		logger.Fatalf(true, "error in metric http server: %v", http.ListenAndServe(":9090", promhttp.Handler()))
 	}()
-	logger.Fatalf(true, "error in main http server: %v", http.ListenAndServe(":8080", mrouter))
+	handler := cors.Default().Handler(mrouter)
+	logger.Fatalf(true, "error in main http server: %v", http.ListenAndServe(":8080", handler))
 }
