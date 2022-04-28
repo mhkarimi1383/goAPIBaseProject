@@ -13,7 +13,7 @@ This project made to combine some pretty beautiful thing together
 
 ## Project files structure
 * `logger`: package for logging on top of [sirupsen/logrus](https://github.com/sirupsen/logrus) with option to sent logs to Sentry
-* `httpHandlers`: all of the http handlers shoud be here
+* `httpHandlers`: all of the http handlers should be here
 * `httpServer`: http server components are here ready to use
 * `structures`: every structure that we want every where should be here
 * `configuration`: on top of [ilyakaznacheev/cleanenv](https://github.com/ilyakaznacheev/cleanenv) this will manage our configurations with a simple function that returns a variable with Configuration struct
