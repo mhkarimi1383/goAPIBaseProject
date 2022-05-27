@@ -1,6 +1,8 @@
 // all types are here
 package types
 
+import "time"
+
 type Configuration struct {
 	MetricAddress string `env:"METRIC_ADDRESS" env-default:":9090" yaml:"metric_address"`
 	APIAddress    string `env:"API_ADDRESS" env-default:":8080" yaml:"api_address"`
@@ -13,8 +15,8 @@ type HealthzResponse struct {
 }
 
 type HelloResponse struct {
-	Greating string `json:"greating"`
-	Time     string `json:"time"`
+	Greeting string    `json:"greeting"`
+	Time     time.Time `json:"time"`
 }
 
 type UntypedMap map[any]any

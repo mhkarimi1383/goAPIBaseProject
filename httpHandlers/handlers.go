@@ -4,6 +4,7 @@ package httpHandlers
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/mhkarimi1383/goAPIBaseProject/configuration"
 	"github.com/mhkarimi1383/goAPIBaseProject/httpServer"
@@ -30,6 +31,35 @@ func init() {
 	}
 	apiAddress = cfg.APIAddress
 	metricAddress = cfg.MetricAddress
+}
+
+func greeting(w http.ResponseWriter, r *http.Request) {
+	if r.Header.Get("Content-Type") == "application/json" {
+		// jsonResponse := types.UntypedMap{
+		// 	"greeting": "Hello",
+		// 	"time": "I am healthy",
+		// }
+		jsonResponse := types.HelloResponse{
+			Greeting: "Hello",
+			Time:     time.Now(),
+		}
+		err := responseWriter(w, &jsonResponse, http.StatusOK)
+		if err != nil {
+			logger.Warnf(true, "error while sending response %v", err)
+		}
+		return
+	} else {
+		strResponse := fmt.Sprintf("Hello, current time is %v", time.Now().Format(time.RFC3339))
+		err := responseWriter(w, &strResponse, http.StatusOK)
+		if err != nil {
+			logger.Warnf(true, "error while sending response %v", err)
+		}
+		return
+	}
+}
+
+func greetingHandler() http.Handler {
+	return http.HandlerFunc(greeting)
 }
 
 func healthz(w http.ResponseWriter, r *http.Request) {
@@ -82,6 +112,7 @@ func RunServer() {
 	router := mux.NewRouter()
 	router.StrictSlash(true)
 	router.Handle("/healthz/{name}", httpServer.WithLogging(healthzHandler()))
+	router.Handle("/greeting", httpServer.WithLogging(greetingHandler()))
 	router.NotFoundHandler = httpServer.WithLogging(notFoundHandler())
 	mrouter := middlewarestd.Handler("", mdlw, router)
 	go func() {
