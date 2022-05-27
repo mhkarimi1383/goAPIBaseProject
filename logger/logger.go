@@ -26,7 +26,7 @@ func init() {
 	}
 }
 
-func Fatalf(sendToSentry bool, format string, args ...interface{}) {
+func Fatalf(sendToSentry bool, format string, args ...any) {
 	msg := fmt.Sprintf(format, args...)
 	logrus.Fatalln(msg)
 	if sentryControl && sendToSentry {
@@ -34,7 +34,7 @@ func Fatalf(sendToSentry bool, format string, args ...interface{}) {
 	}
 }
 
-func Warnf(sendToSentry bool, format string, args ...interface{}) {
+func Warnf(sendToSentry bool, format string, args ...any) {
 	msg := fmt.Errorf(format, args...)
 	logrus.Warnln(msg)
 	if sentryControl && sendToSentry {
@@ -42,7 +42,7 @@ func Warnf(sendToSentry bool, format string, args ...interface{}) {
 	}
 }
 
-func Infof(sendToSentry bool, format string, args ...interface{}) {
+func Infof(sendToSentry bool, format string, args ...any) {
 	msg := fmt.Errorf(format, args...)
 	logrus.Infoln(msg)
 	if sentryControl && sendToSentry {
