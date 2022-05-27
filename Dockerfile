@@ -5,6 +5,9 @@ RUN apk add --no-cache git
 COPY . /go/src/github.com/mhkarimi1383/goBaseAPIProject
 WORKDIR /go/src/github.com/mhkarimi1383/goBaseAPIProject
 
+## we have vendor directory in our project no need to get packages again
+# RUN go get -v ./...
+
 RUN go build -o /goBaseAPIProject
 
 FROM alpine:3.14 as runtime
