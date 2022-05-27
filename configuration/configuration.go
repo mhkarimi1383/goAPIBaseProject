@@ -2,30 +2,31 @@
 package configuration
 
 import (
-	"github.com/mhkarimi1383/goAPIBaseProject/structures"
+	"github.com/mhkarimi1383/goAPIBaseProject/types"
 
 	"github.com/ilyakaznacheev/cleanenv"
 )
 
 var (
-	cfg *structures.Configuration
+	cfg types.Configuration
 	err error
 )
 
 func init() {
-	err = cleanenv.ReadConfig("config.yml", cfg)
+	err = cleanenv.ReadConfig("config.yml", &cfg)
 	if err != nil {
-		err = cleanenv.ReadEnv(cfg)
+		err = cleanenv.ReadEnv(&cfg)
 		if err != nil {
-			cfg = nil
+			cfg = types.Configuration{}
 		}
 	}
 }
 
-func GetConfig() (structures.Configuration, error) {
-	if cfg != nil {
-		return *cfg, err
+func GetConfig() (types.Configuration, error) {
+	emptyCfg := types.Configuration{}
+	if cfg != emptyCfg {
+		return cfg, err
 	} else {
-		return structures.Configuration{}, err
+		return types.Configuration{}, err
 	}
 }

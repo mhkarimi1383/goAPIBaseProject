@@ -3,6 +3,7 @@
 This project made to combine some pretty beautiful thing together
 
 ## This project is using
+
 * `net/http` as http server
 * [gorilla/mux](https://github.com/gorilla/mux) as router
 * Sentry as APM
@@ -12,6 +13,7 @@ This project made to combine some pretty beautiful thing together
 * [rs/cors](https://github.com/rs/cors) as middleware for CORS
 
 ## Project files structure
+
 * `logger`: package for logging on top of [sirupsen/logrus](https://github.com/sirupsen/logrus) with option to sent logs to Sentry
 * `httpHandlers`: all of the http handlers should be here
 * `httpServer`: http server components are here ready to use

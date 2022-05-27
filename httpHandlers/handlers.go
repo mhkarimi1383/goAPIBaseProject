@@ -3,11 +3,12 @@ package httpHandlers
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
+	"github.com/mhkarimi1383/goAPIBaseProject/configuration"
 	"github.com/mhkarimi1383/goAPIBaseProject/httpServer"
 	"github.com/mhkarimi1383/goAPIBaseProject/logger"
+	"github.com/mhkarimi1383/goAPIBaseProject/types"
 
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -17,12 +18,44 @@ import (
 	middlewarestd "github.com/slok/go-http-metrics/middleware/std"
 )
 
+var (
+	apiAddress    string
+	metricAddress string
+)
+
+func init() {
+	cfg, err := configuration.GetConfig()
+	if err != nil {
+		logger.Fatalf(true, "error in initializing configuration: %v", err)
+	}
+	apiAddress = cfg.APIAddress
+	metricAddress = cfg.MetricAddress
+}
+
 func healthz(w http.ResponseWriter, r *http.Request) {
 	parameters := mux.Vars(r)
-	w.WriteHeader(http.StatusOK)
-	_, err := fmt.Fprint(w, "I AM Healthy :) "+parameters["name"])
-	if err != nil {
-		log.Println("err")
+	name := parameters["name"]
+	if r.Header.Get("Content-Type") == "application/json" {
+		// jsonResponse := types.UntypedMap{
+		// 	"name":    name,
+		// 	"msg": "I am healthy",
+		// }
+		jsonResponse := types.HealthzResponse{
+			Name:    name,
+			Message: "I am healthy",
+		}
+		err := responseWriter(w, &jsonResponse, http.StatusOK)
+		if err != nil {
+			logger.Warnf(true, "error while sending response %v", err)
+		}
+		return
+	} else {
+		strResponse := fmt.Sprintf("Hello %s", name)
+		err := responseWriter(w, &strResponse, http.StatusOK)
+		if err != nil {
+			logger.Warnf(true, "error while sending response %v", err)
+		}
+		return
 	}
 }
 
@@ -34,7 +67,7 @@ func notFound(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	_, err := fmt.Fprint(w, "404; sorry the page that you want is not exist")
 	if err != nil {
-		log.Println("err")
+		logger.Warnf(true, "error while sending response %v", err)
 	}
 }
 
@@ -48,12 +81,14 @@ func RunServer() {
 	})
 	router := mux.NewRouter()
 	router.StrictSlash(true)
-	router.Handle("/healthz", httpServer.WithLogging(healthzHandler()))
+	router.Handle("/healthz/{name}", httpServer.WithLogging(healthzHandler()))
 	router.NotFoundHandler = httpServer.WithLogging(notFoundHandler())
 	mrouter := middlewarestd.Handler("", mdlw, router)
 	go func() {
-		logger.Fatalf(true, "error in metric http server: %v", http.ListenAndServe(":9090", promhttp.Handler()))
+		logger.Infof(false, "starting metric server on %v", metricAddress)
+		logger.Fatalf(true, "error in metric http server: %v", http.ListenAndServe(metricAddress, promhttp.Handler()))
 	}()
 	handler := cors.Default().Handler(mrouter)
-	logger.Fatalf(true, "error in main http server: %v", http.ListenAndServe(":8080", handler))
+	logger.Infof(false, "starting main server on %v", apiAddress)
+	logger.Fatalf(true, "error in main http server: %v", http.ListenAndServe(apiAddress, handler))
 }
