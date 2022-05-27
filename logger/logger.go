@@ -35,17 +35,17 @@ func Fatalf(sendToSentry bool, format string, args ...interface{}) {
 }
 
 func Warnf(sendToSentry bool, format string, args ...interface{}) {
-	msg := fmt.Sprintf(format, args...)
+	msg := fmt.Errorf(format, args...)
 	logrus.Warnln(msg)
 	if sentryControl && sendToSentry {
-		sentry.CaptureMessage(msg)
+		sentry.CaptureException(msg)
 	}
 }
 
 func Infof(sendToSentry bool, format string, args ...interface{}) {
-	msg := fmt.Sprintf(format, args...)
+	msg := fmt.Errorf(format, args...)
 	logrus.Infoln(msg)
 	if sentryControl && sendToSentry {
-		sentry.CaptureMessage(msg)
+		sentry.CaptureException(msg)
 	}
 }
