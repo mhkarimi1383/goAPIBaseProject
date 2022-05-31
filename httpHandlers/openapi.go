@@ -19,11 +19,13 @@ const (
 <body>
 	<rapi-doc
     spec-url = "/redoc/openapi.json"
-    theme = "dark"
-    schema-style = "table"
-    show-header = "true"
+    show-header = "false"
+	show-info = "true"
     mono-font = "JetBrains Mono"
     regular-font = "JetBrains Mono"
+	theme = "light"
+	render-style="focused"
+	allow-try="true" 
 	>
 	</rapi-doc>
 </body>
