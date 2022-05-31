@@ -45,7 +45,7 @@ var (
 func RapiDoc() http.Handler {
 	b := []byte(rapidocTemplate)
 
-	return http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
+	return http.HandlerFunc(func(rw http.ResponseWriter, _ *http.Request) {
 		rw.Header().Set("Content-Type", "text/html; charset=utf-8")
 		rw.WriteHeader(http.StatusOK)
 
