@@ -11,6 +11,8 @@ This project made to combine some pretty beautiful thing together
 * [ilyakaznacheev/cleanenv](https://github.com/ilyakaznacheev/cleanenv) for managing configurations
 * [slok/go-http-metrics](https://github.com/slok/go-http-metrics) as middleware for exporting prometheus metrics
 * [rs/cors](https://github.com/rs/cors) as middleware for CORS
+* [mvrilo/go-redoc](https://github.com/mvrilo/go-redoc) for redoc view
+* [rapi-doc/RapiDoc](https://github.com/rapi-doc/RapiDoc) for RapiDoc view instead of swagger
 
 ## Project files structure
 
