@@ -12,7 +12,8 @@ RUN go build -o /goBaseAPIProject
 
 FROM alpine:3.14 as runtime
 
-COPY --from=builder /goBaseAPIProject /goBaseAPIProject
-RUN chmod +x /goBaseAPIProject
+COPY --from=builder /goBaseAPIProject /app/goBaseAPIProject
+COPY openapi.json /app/openapi.json
+RUN chmod +x /app/goBaseAPIProject
 
-CMD ["/goBaseAPIProject"]
+CMD ["/app/goBaseAPIProject"]
