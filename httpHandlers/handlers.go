@@ -111,6 +111,8 @@ func RunServer() {
 	})
 	router := mux.NewRouter()
 	router.StrictSlash(true)
+	router.PathPrefix("/redoc").Handler(doc.Handler()) // not logging this section
+	router.PathPrefix("/docs").Handler(RapiDoc())      // not logging this section
 	router.Handle("/healthz/{name}", httpServer.WithLogging(healthzHandler()))
 	router.Handle("/greeting", httpServer.WithLogging(greetingHandler()))
 	router.NotFoundHandler = httpServer.WithLogging(notFoundHandler())

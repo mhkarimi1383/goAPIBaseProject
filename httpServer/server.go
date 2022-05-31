@@ -48,7 +48,7 @@ func WithLogging(h http.Handler) http.Handler {
 		}
 		h.ServeHTTP(&lrw, req) // inject our implementation of http.ResponseWriter
 		duration := time.Since(start)
-		if responseData.status == http.StatusOK {
+		if responseData.status >= 200 && responseData.status <= 299 {
 			logrus.WithFields(logrus.Fields{
 				"uri":            req.RequestURI,
 				"method":         req.Method,
@@ -66,7 +66,7 @@ func WithLogging(h http.Handler) http.Handler {
 				"size":           responseData.size,
 				"remote address": req.RemoteAddr,
 			}).Warn("request done with problem")
-			sentry.CaptureException(fmt.Errorf("request from alertmanager done with problem, uri: %v, method: %v, status: %v, duration: %v, size: %v, remote address: %v",
+			sentry.CaptureException(fmt.Errorf("request from done with problem, uri: %v, method: %v, status: %v, duration: %v, size: %v, remote address: %v",
 				req.RequestURI,
 				req.Method,
 				responseData.status,

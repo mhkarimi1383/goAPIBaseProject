@@ -23,7 +23,7 @@ This project made to combine some pretty beautiful thing together
 
 ## TODO
 
-* [ ] Add Redoc and RapliDoc for openapi support
+* [x] Add Redoc and RapliDoc for openapi support
 * [x] Dockerize project
 * [ ] Implement some features of frameworks (e.g. validators and response writer) [WIP]
 * [ ] More Documents

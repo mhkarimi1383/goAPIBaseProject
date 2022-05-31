@@ -15,6 +15,7 @@ import (
 // responseWriter is a function to send response to the client with the given status code
 // and decide whether to send the response as json or string then set the content type
 func responseWriter[R string | types.UntypedMap | types.Response](w http.ResponseWriter, response *R, status int) error {
+	w.WriteHeader(status)
 	if reflect.ValueOf(*response).Kind() == reflect.Struct || reflect.ValueOf(*response).Kind() == reflect.Map {
 		err := json.NewEncoder(w).Encode(response)
 		w.Header().Set("Content-Type", "application/json")

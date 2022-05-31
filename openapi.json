@@ -1,0 +1,42 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "OpenAPI Spec of BaseAPI Project",
+        "version": "there is no version :)"
+    },
+    "paths": {
+        "/healthz/{name}": {
+            "get": {
+                "summary": "Healthz",
+                "description": "Say that the service is healthy to the name",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "name",
+                        "schema":{
+                            "type": "string"
+                        },
+                        "required": true,
+                        "example": "Steve"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/greeting":{
+            "get":{
+                "summary": "Greeting",
+                "description": "Say hello and time",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}
