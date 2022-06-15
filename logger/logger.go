@@ -1,4 +1,5 @@
 // logging module with sentry capture
+// TODO: also send logs to logstash
 package logger
 
 import (
@@ -16,36 +17,48 @@ var (
 )
 
 func init() {
-	logrus.SetFormatter(&logrus.TextFormatter{
-		DisableQuote: true,
-	})
 	cfg, _ := configuration.GetConfig()
 	sentryDsn = cfg.SentryDsn
 	if sentryDsn == "" {
 		sentryControl = false
 	}
+	if cfg.LogFormat == "json" {
+		logrus.SetFormatter(&logrus.JSONFormatter{})
+	} else {
+		logrus.SetFormatter(&logrus.TextFormatter{
+			DisableQuote: true,
+		})
+	}
 }
 
 func Fatalf(sendToSentry bool, format string, args ...any) {
-	msg := fmt.Sprintf(format, args...)
-	logrus.Fatalln(msg)
+	msg := fmt.Errorf(format, args...)
 	if sentryControl && sendToSentry {
-		sentry.CaptureMessage(msg)
+		sentry.CaptureException(msg)
 	}
+	logrus.Fatalln(msg)
 }
 
 func Warnf(sendToSentry bool, format string, args ...any) {
 	msg := fmt.Errorf(format, args...)
-	logrus.Warnln(msg)
 	if sentryControl && sendToSentry {
 		sentry.CaptureException(msg)
 	}
+	logrus.Warnln(msg)
 }
 
 func Infof(sendToSentry bool, format string, args ...any) {
 	msg := fmt.Errorf(format, args...)
-	logrus.Infoln(msg)
 	if sentryControl && sendToSentry {
-		sentry.CaptureException(msg)
+		sentry.CaptureMessage(msg.Error())
 	}
+	logrus.Infoln(msg)
+}
+
+func Debugf(sendToSentry bool, format string, args ...any) {
+	msg := fmt.Errorf(format, args...)
+	if sentryControl && sendToSentry {
+		sentry.CaptureMessage(msg.Error())
+	}
+	logrus.Debugln(msg)
 }
