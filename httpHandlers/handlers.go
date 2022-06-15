@@ -93,9 +93,10 @@ func healthzHandler() http.Handler {
 	return http.HandlerFunc(healthz)
 }
 
-func notFound(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotFound)
-	_, err := fmt.Fprint(w, "404; sorry the page that you want is not exist")
+func notFound(w http.ResponseWriter, _ *http.Request) {
+	const status = http.StatusNotFound
+	w.WriteHeader(status)
+	_, err := fmt.Fprint(w, http.StatusText(status))
 	if err != nil {
 		logger.Warnf(true, "error while sending response %v", err)
 	}

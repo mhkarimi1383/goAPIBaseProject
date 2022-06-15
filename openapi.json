@@ -22,6 +22,7 @@
     "paths": {
         "/healthz/{name}": {
             "get": {
+                "operationId": "healthz",
                 "summary": "Healthz",
                 "description": "Say that the service is healthy to the name",
                 "parameters": [
@@ -44,6 +45,7 @@
         },
         "/greeting":{
             "get":{
+                "operationId": "getGreeting",
                 "summary": "Greeting",
                 "description": "Say hello and time",
                 "responses": {
