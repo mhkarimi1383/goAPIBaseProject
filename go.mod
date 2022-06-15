@@ -4,11 +4,20 @@ go 1.18
 
 require (
 	github.com/getsentry/sentry-go v0.13.0
+	github.com/go-playground/validator/v10 v10.11.0
 	github.com/gorilla/mux v1.8.0
 	github.com/ilyakaznacheev/cleanenv v1.2.6
 	github.com/prometheus/client_golang v1.12.2
 	github.com/sirupsen/logrus v1.8.1
 	github.com/slok/go-http-metrics v0.10.0
+)
+
+require (
+	github.com/go-playground/locales v0.14.0 // indirect
+	github.com/go-playground/universal-translator v0.18.0 // indirect
+	github.com/leodido/go-urn v1.2.1 // indirect
+	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
+	golang.org/x/text v0.3.7 // indirect
 )
 
 require (

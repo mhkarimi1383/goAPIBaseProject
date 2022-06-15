@@ -13,6 +13,7 @@ This project made to combine some pretty beautiful thing together
 * [rs/cors](https://github.com/rs/cors) as middleware for CORS
 * [mvrilo/go-redoc](https://github.com/mvrilo/go-redoc) for redoc view
 * [rapi-doc/RapiDoc](https://github.com/rapi-doc/RapiDoc) for RapiDoc view instead of swagger
+* [go-playground/validator](github.com/go-playground/validator) as base of validation
 
 ## Project files structure
 
@@ -22,6 +23,7 @@ This project made to combine some pretty beautiful thing together
 * `type`: every type that we want every where should be here
 * `configuration`: on top of [ilyakaznacheev/cleanenv](https://github.com/ilyakaznacheev/cleanenv) this will manage our configurations with a simple function that returns a variable with Configuration struct
 * `air`: executable version of [cosmtrek/air](https://github.com/cosmtrek/air) is here to help you with live reloading you code (configuration for that is present here)
+* `validator`: package for validating our things
 
 ## TODO
 
