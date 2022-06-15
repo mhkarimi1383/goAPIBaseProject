@@ -29,5 +29,5 @@ This project made to combine some pretty beautiful thing together
 
 * [x] Add Redoc and RapliDoc for openapi support
 * [x] Dockerize project
-* [ ] Implement some features of frameworks (e.g. validators and response writer) [WIP]
+* [x] Implement some features of frameworks (e.g. validators and response writer)
 * [ ] More Documents
