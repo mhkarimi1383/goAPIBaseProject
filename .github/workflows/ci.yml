@@ -34,5 +34,11 @@ jobs:
     - name: Publish doc to go.dev packages
       run: |
         git pull
-        export latest="$(git describe --tags `git rev-list --tags --max-count=1`)"
-        curl https://proxy.golang.org/github.com/mhkarimi1383/goAPIBaseProject/@v/$latest.info
+        export COMMIT=`git rev-parse HEAD`
+        export TAG=$(git describe --exact-match --abbrev=0 --tags ${COMMIT} 2> /dev/null || true)
+        if [ -z "$TAG" ]; then
+          export VERSION=$COMMIT
+        else
+          export VERSION=$TAG
+        fi
+        curl https://proxy.golang.org/github.com/mhkarimi1383/goAPIBaseProject/@v/$VERSION.info
