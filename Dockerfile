@@ -19,7 +19,7 @@ COPY --from=builder /goBaseAPIProject .
 RUN chmod +x ./goBaseAPIProject
 
 ## copy static files
-COPY openapi.json .
+COPY openapi.json.tpl .
 
 ## making it non-root user
 RUN adduser -D no-name
