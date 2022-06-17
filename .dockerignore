@@ -5,3 +5,4 @@
 .gitignore
 .DS_Store
 air/
+openapi.json

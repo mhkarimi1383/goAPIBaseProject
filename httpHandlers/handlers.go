@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/common-nighthawk/go-figure"
 	"github.com/mhkarimi1383/goAPIBaseProject/configuration"
 	"github.com/mhkarimi1383/goAPIBaseProject/httpServer"
 	"github.com/mhkarimi1383/goAPIBaseProject/logger"
@@ -24,6 +25,8 @@ var (
 	apiAddress string
 	// global variable to store metric address
 	metricAddress string
+	// global variable to store the info of the application
+	information types.ApplicationInformation
 )
 
 // store needed variables from configuration at first import
@@ -34,6 +37,8 @@ func init() {
 	}
 	apiAddress = cfg.APIAddress
 	metricAddress = cfg.MetricAddress
+	information.Title = cfg.ApplicationTitle
+	information.Description = cfg.ApplicationDescription
 }
 
 // greeting is a function for greetingHandler that returns a greeting message
@@ -118,6 +123,8 @@ func notFoundHandler() http.Handler {
 
 // Main function to start the server based on configuration
 func RunServer() {
+	figure := figure.NewFigure(information.Title, "doom", true)
+	figure.Print()
 	mdlw := middleware.New(middleware.Config{
 		Recorder: metrics.NewRecorder(metrics.Config{}),
 	}) // create a new middleware for metrics

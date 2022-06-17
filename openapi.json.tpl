@@ -6,13 +6,13 @@
         }
     ],
     "info": {
-        "title": "OpenAPI Spec of BaseAPI Project",
+        "title": "{{.Title}}",
         "version": "there is no version :)",
         "license": {
             "name": "GNU GENERAL PUBLIC LICENSE VERSION 3",
             "url": "https://www.gnu.org/licenses/gpl-3.0.txt"
         },
-        "description": "This project made to combine some pretty beautiful things together",
+        "description": "{{.Description}}",
         "contact": {
             "email": "info@karimi.dev",
             "name": "Muhammed Hussein Karimi",
