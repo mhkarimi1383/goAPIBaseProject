@@ -1,4 +1,3 @@
-// Package httpHandlers handler for openapi things are here
 package httpHandlers
 
 import (
@@ -8,6 +7,7 @@ import (
 )
 
 const (
+	// rapidocTemplate is a template for rapidoc HTML page
 	rapidocTemplate = `<!doctype html>
 <html>
 <head>
@@ -34,6 +34,7 @@ const (
 )
 
 var (
+	// configuration of redoc
 	doc = &redoc.Redoc{
 		Title:       "Base API Documentation",
 		Description: "Base API Documentation",
@@ -42,7 +43,8 @@ var (
 	}
 )
 
-func RapiDoc() http.Handler {
+// handler for raplidoc
+func rapiDoc() http.Handler {
 	b := []byte(rapidocTemplate)
 
 	return http.HandlerFunc(func(rw http.ResponseWriter, _ *http.Request) {

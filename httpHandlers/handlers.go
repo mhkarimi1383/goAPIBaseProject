@@ -20,10 +20,13 @@ import (
 )
 
 var (
-	apiAddress    string
+	// global variable to store api address
+	apiAddress string
+	// global variable to store metric address
 	metricAddress string
 )
 
+// store needed variables from configuration at first import
 func init() {
 	cfg, err := configuration.GetConfig()
 	if err != nil {
@@ -33,6 +36,7 @@ func init() {
 	metricAddress = cfg.MetricAddress
 }
 
+// greeting is a function for greetingHandler that returns a greeting message
 func greeting(w http.ResponseWriter, r *http.Request) {
 	if r.Header.Get("Content-Type") == "application/json" {
 		// jsonResponse := types.UntypedMap{
@@ -58,10 +62,12 @@ func greeting(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// greetingHandler is a function that calls greeting function and returns a greeting message
 func greetingHandler() http.Handler {
 	return http.HandlerFunc(greeting)
 }
 
+// healthz is a function that returns a health-check (usually needed for Kubernetes/Docker) message to check if the server is running
 func healthz(w http.ResponseWriter, r *http.Request) {
 	parameters := mux.Vars(r)
 	name := parameters["name"]
@@ -89,10 +95,13 @@ func healthz(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// handler for will call healthz function
 func healthzHandler() http.Handler {
 	return http.HandlerFunc(healthz)
 }
 
+// notFound is a function that returns a not found message when the requested path is not found
+// only for logging purpose
 func notFound(w http.ResponseWriter, _ *http.Request) {
 	const status = http.StatusNotFound
 	w.WriteHeader(status)
@@ -102,27 +111,29 @@ func notFound(w http.ResponseWriter, _ *http.Request) {
 	}
 }
 
+// calling notFound function when the requested path is not found
 func notFoundHandler() http.Handler {
 	return http.HandlerFunc(notFound)
 }
 
+// Main function to start the server based on configuration
 func RunServer() {
 	mdlw := middleware.New(middleware.Config{
 		Recorder: metrics.NewRecorder(metrics.Config{}),
-	})
-	router := mux.NewRouter()
-	router.StrictSlash(true)
-	router.PathPrefix("/redoc").Handler(doc.Handler()) // not logging this section
-	router.PathPrefix("/docs").Handler(RapiDoc())      // not logging this section
-	router.Handle("/healthz/{name}", httpServer.WithLogging(healthzHandler()))
-	router.Handle("/greeting", httpServer.WithLogging(greetingHandler()))
-	router.NotFoundHandler = httpServer.WithLogging(notFoundHandler())
-	mrouter := middlewarestd.Handler("", mdlw, router)
+	}) // create a new middleware for metrics
+	router := mux.NewRouter()                                                  // initialize router
+	router.StrictSlash(true)                                                   // enable strict slash (/)
+	router.PathPrefix("/redoc").Handler(doc.Handler())                         // not logging this section
+	router.PathPrefix("/docs").Handler(rapiDoc())                              // not logging this section
+	router.Handle("/healthz/{name}", httpServer.WithLogging(healthzHandler())) // healthz route
+	router.Handle("/greeting", httpServer.WithLogging(greetingHandler()))      // greeting route
+	router.NotFoundHandler = httpServer.WithLogging(notFoundHandler())         // setting not found handler
+	mrouter := middlewarestd.Handler("", mdlw, router)                         // init router for metrics
 	go func() {
 		logger.Infof(false, "starting metric server on %v", metricAddress)
 		logger.Fatalf(true, "error in metric http server: %v", http.ListenAndServe(metricAddress, promhttp.Handler()))
-	}()
-	handler := cors.Default().Handler(mrouter)
+	}() // start metric server
+	handler := cors.Default().Handler(mrouter) // add cors to the router
 	logger.Infof(false, "starting main server on %v", apiAddress)
-	logger.Fatalf(true, "error in main http server: %v", http.ListenAndServe(apiAddress, handler))
+	logger.Fatalf(true, "error in main http server: %v", http.ListenAndServe(apiAddress, handler)) // start main server
 }

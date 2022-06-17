@@ -3,6 +3,7 @@ package types
 
 import "time"
 
+// Configuration is used to store the configuration by cleanenv package
 type Configuration struct {
 	MetricAddress string `env:"METRIC_ADDRESS" env-default:":9090" yaml:"metric_address"`
 	APIAddress    string `env:"API_ADDRESS" env-default:":8080" yaml:"api_address"`
@@ -20,8 +21,10 @@ type HelloResponse struct {
 	Time     time.Time `json:"time"`
 }
 
+// a type that used to create untyped map (for json)
 type UntypedMap map[any]any
 
+// any acceptable response will be here using generic it will accept one of the given types
 type Response interface {
 	HealthzResponse |
 		HelloResponse

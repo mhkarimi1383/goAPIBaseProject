@@ -8,10 +8,14 @@ import (
 )
 
 var (
+	// cfg is a global variable that holds the configuration
 	cfg types.Configuration
+
+	// err is a global variable that holds error if any
 	err error
 )
 
+// initialize the configuration after first import and store it in cfg global variable
 func init() {
 	err = cleanenv.ReadConfig("config.yml", &cfg)
 	if err != nil {
@@ -22,6 +26,7 @@ func init() {
 	}
 }
 
+// others will use this function to get the configuration
 func GetConfig() (types.Configuration, error) {
 	emptyCfg := types.Configuration{}
 	if cfg != emptyCfg {

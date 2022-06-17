@@ -1,5 +1,3 @@
-// this file contains the utility functions for the http handlers
-// here we going to implement some features from frameworks (e.g. response writer, validation, etc.)
 package httpHandlers
 
 import (

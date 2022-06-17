@@ -1,4 +1,4 @@
-// logging module with sentry capture
+// logging module with sentry capture on top of logrus
 // TODO: also send logs to logstash
 package logger
 
@@ -12,7 +12,9 @@ import (
 )
 
 var (
-	sentryDsn     string
+	// global variable to hold the sentry dsn
+	sentryDsn string
+	// global variable to hold whether to send the logs to sentry or not
 	sentryControl bool = true
 )
 
@@ -31,6 +33,7 @@ func init() {
 	}
 }
 
+// log a message with Fatal level
 func Fatalf(sendToSentry bool, format string, args ...any) {
 	msg := fmt.Errorf(format, args...)
 	if sentryControl && sendToSentry {
@@ -39,6 +42,7 @@ func Fatalf(sendToSentry bool, format string, args ...any) {
 	logrus.Fatalln(msg)
 }
 
+// log a message with Warning level
 func Warnf(sendToSentry bool, format string, args ...any) {
 	msg := fmt.Errorf(format, args...)
 	if sentryControl && sendToSentry {
@@ -47,6 +51,7 @@ func Warnf(sendToSentry bool, format string, args ...any) {
 	logrus.Warnln(msg)
 }
 
+// log a message with Info level
 func Infof(sendToSentry bool, format string, args ...any) {
 	msg := fmt.Errorf(format, args...)
 	if sentryControl && sendToSentry {
@@ -55,6 +60,7 @@ func Infof(sendToSentry bool, format string, args ...any) {
 	logrus.Infoln(msg)
 }
 
+// log a message with Debug level
 func Debugf(sendToSentry bool, format string, args ...any) {
 	msg := fmt.Errorf(format, args...)
 	if sentryControl && sendToSentry {

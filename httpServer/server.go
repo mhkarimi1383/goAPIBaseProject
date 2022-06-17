@@ -1,4 +1,4 @@
-// our custom http server goes here
+// our custom http server goes here (with logging middleware is here)
 package httpServer
 
 import (
