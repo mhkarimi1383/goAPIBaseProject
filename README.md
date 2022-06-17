@@ -1,6 +1,7 @@
 # Go Simple API Project
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/mhkarimi1383/goAPIBaseProject.svg)](https://pkg.go.dev/github.com/mhkarimi1383/goAPIBaseProject)
+[![Go Report Card](https://goreportcard.com/badge/github.com/mhkarimi1383/goAPIBaseProject)](https://goreportcard.com/report/github.com/mhkarimi1383/goAPIBaseProject)
 
 This project made to combine some pretty beautiful thing together
 
