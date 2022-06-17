@@ -16,7 +16,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build the hello-world Docker image
+    - name: Build & Push Docker image
       run: |
         docker build . --tag ghcr.io/mhkarimi1383/go-api-base-project:latest --tag ghcr.io/mhkarimi1383/go-api-base-project:${GITHUB_SHA:0:8}
         docker push ghcr.io/mhkarimi1383/go-api-base-project:latest
