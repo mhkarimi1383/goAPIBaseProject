@@ -1,5 +1,7 @@
 # Go Simple API Project
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/mhkarimi1383/goAPIBaseProject.svg)](https://pkg.go.dev/github.com/mhkarimi1383/goAPIBaseProject)
+
 This project made to combine some pretty beautiful thing together
 
 ## This project is using
@@ -27,8 +29,4 @@ This project made to combine some pretty beautiful thing together
 
 ## TODO
 
-### Moved to [GitHub Project](https://github.com/users/mhkarimi1383/projects/1/)
-* [x] Add Redoc and RapliDoc for openapi support
-* [x] Dockerize project
-* [x] Implement some features of frameworks (e.g. validators and response writer)
-* [ ] More Documents
+> Moved to [GitHub Project](https://github.com/users/mhkarimi1383/projects/1/)
