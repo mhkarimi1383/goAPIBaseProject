@@ -1,0 +1,7 @@
+*.md
+.vscode/
+.github/
+.git/
+.gitignore
+.DS_Store
+air/

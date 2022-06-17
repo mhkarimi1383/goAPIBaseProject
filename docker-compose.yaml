@@ -1,0 +1,12 @@
+version: "3"
+services:
+  go-api-base-project:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9090:9090"
+    environment:
+      METRIC_ADDRESS: ":9090"
+      API_ADDRESS: ":8080"

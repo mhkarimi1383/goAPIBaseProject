@@ -12,11 +12,17 @@ RUN go build -o /goBaseAPIProject
 
 FROM alpine:3.14 as runtime
 
+WORKDIR /app
+
 ## copy and prepare binary file
-COPY --from=builder /goBaseAPIProject /app/goBaseAPIProject
-RUN chmod +x /app/goBaseAPIProject
+COPY --from=builder /goBaseAPIProject .
+RUN chmod +x ./goBaseAPIProject
 
 ## copy static files
-COPY openapi.json /app/openapi.json
+COPY openapi.json .
+
+## making it non-root user
+RUN adduser -D no-name
+USER no-name:no-name
 
 CMD ["/app/goBaseAPIProject"]
