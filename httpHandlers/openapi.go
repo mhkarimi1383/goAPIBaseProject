@@ -29,7 +29,7 @@ const (
     regular-font = "JetBrains Mono"
 	theme = "light"
 	render-style="focused"
-	allow-try="true" 
+	allow-try="true"
 	>
 	</rapi-doc>
 </body>
@@ -69,7 +69,6 @@ func init() {
 		logger.Fatalf(true, "error in executing template: %v", err)
 		return
 	}
-	tmpl, _ = template.New("rapidoc").Parse(rapidocTemplate)
 }
 
 // handler for rapidoc
@@ -81,6 +80,5 @@ func rapiDoc() http.Handler {
 		if err != nil {
 			logger.Fatalf(true, "error in executing template: %v", err)
 		}
-		return
 	})
 }

@@ -11,6 +11,7 @@ type Configuration struct {
 	LogFormat              string `env:"LOG_FORMAT" env-default:"text" yaml:"log_format"`
 	ApplicationTitle       string `env:"APPLICATION_TITLE" env-default:"goAPIBaseProject" yaml:"application_title"`
 	ApplicationDescription string `env:"APPLICATION_DESCRIPTION" env-default:"goAPIBaseProject" yaml:"application_description"`
+	WebsocketOrigin        string `env:"WEBSOCKET_ORIGIN" env-default:"*" yaml:"websocket_origin"`
 }
 
 type ApplicationInformation struct {

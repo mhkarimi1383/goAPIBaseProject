@@ -4,6 +4,7 @@ package httpHandlers
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/common-nighthawk/go-figure"
@@ -13,6 +14,7 @@ import (
 	"github.com/mhkarimi1383/goAPIBaseProject/types"
 
 	"github.com/gorilla/mux"
+	ws "github.com/gorilla/websocket"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/cors"
 	metrics "github.com/slok/go-http-metrics/metrics/prometheus"
@@ -27,6 +29,8 @@ var (
 	metricAddress string
 	// global variable to store the info of the application
 	information types.ApplicationInformation
+	// global variable for websocket upgrader
+	websocketUpgrader ws.Upgrader
 )
 
 // store needed variables from configuration at first import
@@ -39,6 +43,18 @@ func init() {
 	metricAddress = cfg.MetricAddress
 	information.Title = cfg.ApplicationTitle
 	information.Description = cfg.ApplicationDescription
+	websocketUpgrader = ws.Upgrader{
+		CheckOrigin: func(r *http.Request) bool {
+			if cfg.WebsocketOrigin == "*" {
+				return true
+			}
+			hasAccess := strings.HasSuffix(r.Host, cfg.WebsocketOrigin)
+			if !hasAccess {
+				logger.Warnf(true, "bad websocket origin %v", r.Host)
+			}
+			return hasAccess
+		},
+	}
 }
 
 // greeting is a function for greetingHandler that returns a greeting message
@@ -105,6 +121,34 @@ func healthzHandler() http.Handler {
 	return http.HandlerFunc(healthz)
 }
 
+// simple websocket function that is simply able to echo message back
+func websocket(w http.ResponseWriter, r *http.Request) {
+	c, err := websocketUpgrader.Upgrade(w, r, nil)
+	if err != nil {
+		logger.Warnf(true, "error while upgrading websocket request %v", err)
+		return
+	}
+	defer c.Close()
+	for {
+		mt, message, err := c.ReadMessage()
+		if err != nil {
+			logger.Warnf(true, "error while reading websocket message %v", err)
+			break
+		}
+		logger.Infof(false, "message from websocket %s", message)
+		err = c.WriteMessage(mt, message)
+		if err != nil {
+			logger.Warnf(true, "error while writing websocket message %v", err)
+			break
+		}
+	}
+}
+
+// calling webcket function from here
+func websocketdHandler() http.Handler {
+	return http.HandlerFunc(websocket)
+}
+
 // notFound is a function that returns a not found message when the requested path is not found
 // only for logging purpose
 func notFound(w http.ResponseWriter, _ *http.Request) {
@@ -134,6 +178,7 @@ func RunServer() {
 	router.PathPrefix("/docs").Handler(rapiDoc())                              // not logging this section
 	router.Handle("/healthz/{name}", httpServer.WithLogging(healthzHandler())) // healthz route
 	router.Handle("/greeting", httpServer.WithLogging(greetingHandler()))      // greeting route
+	router.Handle("/ws", httpServer.WithLogging(websocketdHandler()))          // websocket route
 	router.NotFoundHandler = httpServer.WithLogging(notFoundHandler())         // setting not found handler
 	mrouter := middlewarestd.Handler("", mdlw, router)                         // init router for metrics
 	go func() {
