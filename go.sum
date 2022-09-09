@@ -201,8 +201,8 @@ github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd/go.mod h1:6dJ
 github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=
 github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
-github.com/mvrilo/go-redoc v0.1.1 h1:W2vB8fAaJR3pemLbuYAtQVql7Ww6c4omdaIkjW+tnWY=
-github.com/mvrilo/go-redoc v0.1.1/go.mod h1:GIPJDv4/44PLH8WGb8o5/6xS10hoa4tF6eTUJTd2uTo=
+github.com/mvrilo/go-redoc v0.1.2 h1:qQWTa9YPbE3jcq9XwYRVy0rOUSSskO0cteVyN9tIUYA=
+github.com/mvrilo/go-redoc v0.1.2/go.mod h1:GIPJDv4/44PLH8WGb8o5/6xS10hoa4tF6eTUJTd2uTo=
 github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/mwitkow/go-conntrack v0.0.0-20190716064945-2f068394615f/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/pingcap/errors v0.11.4 h1:lFuQV/oaUMGcD2tqt+01ROSmJs75VG1ToEOkZIZ4nE4=

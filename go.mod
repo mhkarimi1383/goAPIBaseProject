@@ -29,7 +29,7 @@ require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/joho/godotenv v1.4.0 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
-	github.com/mvrilo/go-redoc v0.1.1
+	github.com/mvrilo/go-redoc v0.1.2
 	github.com/prometheus/client_model v0.2.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
