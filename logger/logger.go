@@ -27,7 +27,7 @@ func init() {
 		logrus.SetFormatter(&logrus.JSONFormatter{})
 	} else {
 		logrus.SetFormatter(&logrus.TextFormatter{
-			DisableQuote: true,
+			ForceQuote: true,
 		})
 	}
 }
