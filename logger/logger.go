@@ -3,7 +3,6 @@
 package logger
 
 import (
-	"fmt"
 	"github.com/mhkarimi1383/goAPIBaseProject/configuration"
 
 	"github.com/getsentry/sentry-go"
@@ -27,15 +26,14 @@ func init() {
 		logrus.SetFormatter(&logrus.JSONFormatter{})
 	} else {
 		logrus.SetFormatter(&logrus.TextFormatter{
-			ForceQuote: true,
+			DisableQuote: true,
 		})
 	}
 }
 
 // Fatalf log a message with Fatal level
 func Fatalf(sendToSentry bool, format string, args ...any) {
-	format = escaper(format)
-	msg := fmt.Errorf(format, args...)
+	msg := formatter(format, args...)
 	if sentryControl && sendToSentry {
 		sentry.CaptureException(msg)
 	}
@@ -44,8 +42,7 @@ func Fatalf(sendToSentry bool, format string, args ...any) {
 
 // Warnf log a message with Warning level
 func Warnf(sendToSentry bool, format string, args ...any) {
-	format = escaper(format)
-	msg := fmt.Errorf(format, args...)
+	msg := formatter(format, args...)
 	if sentryControl && sendToSentry {
 		sentry.CaptureException(msg)
 	}
@@ -54,8 +51,7 @@ func Warnf(sendToSentry bool, format string, args ...any) {
 
 // Infof log a message with Info level
 func Infof(sendToSentry bool, format string, args ...any) {
-	format = escaper(format)
-	msg := fmt.Errorf(format, args...)
+	msg := formatter(format, args...)
 	if sentryControl && sendToSentry {
 		sentry.CaptureMessage(msg.Error())
 	}
@@ -64,8 +60,7 @@ func Infof(sendToSentry bool, format string, args ...any) {
 
 // Debugf log a message with Debug level
 func Debugf(sendToSentry bool, format string, args ...any) {
-	format = escaper(format)
-	msg := fmt.Errorf(format, args...)
+	msg := formatter(format, args...)
 	if sentryControl && sendToSentry {
 		sentry.CaptureMessage(msg.Error())
 	}

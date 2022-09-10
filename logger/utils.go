@@ -1,6 +1,10 @@
 package logger
 
-import "strings"
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
 
 var (
 	// list of popular formats (I'm dot sure if it's complete)
@@ -29,13 +33,15 @@ var (
 	}
 )
 
-// escaper escape logs to prevent log injection
+// formatter escape logs to prevent log injection
 // by wrapping formats with `"` and escaping `\n` and `\r`
-func escaper(format string) string {
-	format = strings.ReplaceAll(format, "\n", " [ESCAPED] ")
-	format = strings.ReplaceAll(format, "\r", " [ESCAPED] ")
+// and making error object ready to use
+func formatter(format string, args ...any) error {
 	for _, f := range formats {
 		format = strings.ReplaceAll(format, f, "\""+f+"\"")
 	}
-	return format
+	msg := fmt.Sprintf(format, args...)
+	msg = strings.ReplaceAll(msg, "\n", " [ESCAPED] ")
+	msg = strings.ReplaceAll(msg, "\r", " [ESCAPED] ")
+	return errors.New(msg)
 }
