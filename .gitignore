@@ -141,5 +141,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+.idea/
+
 tmp/
 openapi.json
