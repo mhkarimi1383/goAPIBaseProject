@@ -27,10 +27,24 @@ github.com/go-playground/universal-translator
 # github.com/go-playground/validator/v10 v10.11.0
 ## explicit; go 1.13
 github.com/go-playground/validator/v10
+# github.com/goccy/go-json v0.8.1
+## explicit; go 1.12
+github.com/goccy/go-json
+github.com/goccy/go-json/internal/decoder
+github.com/goccy/go-json/internal/encoder
+github.com/goccy/go-json/internal/encoder/vm
+github.com/goccy/go-json/internal/encoder/vm_color
+github.com/goccy/go-json/internal/encoder/vm_color_indent
+github.com/goccy/go-json/internal/encoder/vm_indent
+github.com/goccy/go-json/internal/errors
+github.com/goccy/go-json/internal/runtime
 # github.com/golang/protobuf v1.5.2
 ## explicit; go 1.9
 github.com/golang/protobuf/proto
 github.com/golang/protobuf/ptypes/timestamp
+# github.com/golang/snappy v0.0.4
+## explicit
+github.com/golang/snappy
 # github.com/gorilla/mux v1.8.0
 ## explicit; go 1.12
 github.com/gorilla/mux
@@ -43,12 +57,24 @@ github.com/ilyakaznacheev/cleanenv
 # github.com/joho/godotenv v1.4.0
 ## explicit; go 1.12
 github.com/joho/godotenv
+# github.com/json-iterator/go v1.1.12
+## explicit; go 1.12
+github.com/json-iterator/go
 # github.com/leodido/go-urn v1.2.1
 ## explicit; go 1.13
 github.com/leodido/go-urn
+# github.com/mattn/go-sqlite3 v1.14.9
+## explicit; go 1.12
+github.com/mattn/go-sqlite3
 # github.com/matttproud/golang_protobuf_extensions v1.0.1
 ## explicit
 github.com/matttproud/golang_protobuf_extensions/pbutil
+# github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd
+## explicit
+github.com/modern-go/concurrent
+# github.com/modern-go/reflect2 v1.0.2
+## explicit; go 1.12
+github.com/modern-go/reflect2
 # github.com/mvrilo/go-redoc v0.1.2
 ## explicit; go 1.16
 github.com/mvrilo/go-redoc
@@ -82,6 +108,20 @@ github.com/slok/go-http-metrics/metrics
 github.com/slok/go-http-metrics/metrics/prometheus
 github.com/slok/go-http-metrics/middleware
 github.com/slok/go-http-metrics/middleware/std
+# github.com/syndtr/goleveldb v1.0.0
+## explicit
+github.com/syndtr/goleveldb/leveldb
+github.com/syndtr/goleveldb/leveldb/cache
+github.com/syndtr/goleveldb/leveldb/comparer
+github.com/syndtr/goleveldb/leveldb/errors
+github.com/syndtr/goleveldb/leveldb/filter
+github.com/syndtr/goleveldb/leveldb/iterator
+github.com/syndtr/goleveldb/leveldb/journal
+github.com/syndtr/goleveldb/leveldb/memdb
+github.com/syndtr/goleveldb/leveldb/opt
+github.com/syndtr/goleveldb/leveldb/storage
+github.com/syndtr/goleveldb/leveldb/table
+github.com/syndtr/goleveldb/leveldb/util
 # golang.org/x/crypto v0.0.0-20220214200702-86341886e292
 ## explicit; go 1.17
 golang.org/x/crypto/sha3
@@ -134,3 +174,21 @@ gopkg.in/yaml.v3
 # olympos.io/encoding/edn v0.0.0-20201019073823-d3554ca0b0a3
 ## explicit; go 1.13
 olympos.io/encoding/edn
+# xorm.io/builder v0.3.11-0.20220531020008-1bd24a7dc978
+## explicit; go 1.11
+xorm.io/builder
+# xorm.io/xorm v1.3.2
+## explicit; go 1.13
+xorm.io/xorm
+xorm.io/xorm/caches
+xorm.io/xorm/contexts
+xorm.io/xorm/convert
+xorm.io/xorm/core
+xorm.io/xorm/dialects
+xorm.io/xorm/internal/json
+xorm.io/xorm/internal/statements
+xorm.io/xorm/internal/utils
+xorm.io/xorm/log
+xorm.io/xorm/names
+xorm.io/xorm/schemas
+xorm.io/xorm/tags
