@@ -243,11 +243,15 @@ func (c *Config) Update() error {
 
 There are several most popular config file formats supported:
 
-- YAML
-- JSON
-- TOML
-- ENV
-- EDN
+- YAML (`.yaml`, `.yml`)
+- JSON (`.json`)
+- TOML (`.toml`)
+- EDN (`.edn`)
+- ENV (`.env`)
+
+**Note**:
+- while using `.env` file the library will set corresponding data to process environment variables.
+  It will override existing variables with the same keys in the process environment.
 
 ## Integration
 
@@ -289,6 +293,12 @@ if err != nil {
 This code will try to read and parse the configuration file `config.yml` as the structure is described in the `Config` structure. Then it will overwrite fields from available environment variables (`PORT`, `HOST`).
 
 For more details check the [example](/example) directory.
+
+## Version Support Policy
+
+We support the last 7 versions of Golang. E.g. if the current version is 1.19, we test compatibility with all versions from 1.19 to 1.13.
+
+If you use an older version of Golang in your project, please use an older library version.
 
 ## Contribution
 
