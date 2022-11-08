@@ -78,7 +78,7 @@ github.com/modern-go/reflect2
 # github.com/mvrilo/go-redoc v0.1.2
 ## explicit; go 1.16
 github.com/mvrilo/go-redoc
-# github.com/prometheus/client_golang v1.13.0
+# github.com/prometheus/client_golang v1.13.1
 ## explicit; go 1.17
 github.com/prometheus/client_golang/prometheus
 github.com/prometheus/client_golang/prometheus/internal
