@@ -10,7 +10,7 @@ WORKDIR /go/src/github.com/mhkarimi1383/goBaseAPIProject
 
 RUN go build -o /goBaseAPIProject
 
-FROM alpine:3.16.2 as runtime
+FROM alpine:3.16.3 as runtime
 
 WORKDIR /app
 
