@@ -3,7 +3,7 @@ module github.com/mhkarimi1383/goAPIBaseProject
 go 1.18
 
 require (
-	github.com/getsentry/sentry-go v0.17.0
+	github.com/getsentry/sentry-go v0.18.0
 	github.com/go-playground/validator/v10 v10.11.2
 	github.com/gorilla/mux v1.8.0
 	github.com/ilyakaznacheev/cleanenv v1.4.2
