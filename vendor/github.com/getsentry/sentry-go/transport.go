@@ -94,7 +94,23 @@ func getRequestBodyFromEvent(event *Event) []byte {
 	return nil
 }
 
-func transactionEnvelopeFromBody(event *Event, dsn *Dsn, sentAt time.Time, body json.RawMessage) (*bytes.Buffer, error) {
+func encodeEnvelopeItem(enc *json.Encoder, itemType string, body json.RawMessage) error {
+	// Item header
+	err := enc.Encode(struct {
+		Type   string `json:"type"`
+		Length int    `json:"length"`
+	}{
+		Type:   itemType,
+		Length: len(body),
+	})
+	if err == nil {
+		// payload
+		err = enc.Encode(body)
+	}
+	return err
+}
+
+func envelopeFromBody(event *Event, dsn *Dsn, sentAt time.Time, body json.RawMessage) (*bytes.Buffer, error) {
 	var b bytes.Buffer
 	enc := json.NewEncoder(&b)
 
@@ -127,21 +143,25 @@ func transactionEnvelopeFromBody(event *Event, dsn *Dsn, sentAt time.Time, body 
 		return nil, err
 	}
 
-	// Item header
-	err = enc.Encode(struct {
-		Type   string `json:"type"`
-		Length int    `json:"length"`
-	}{
-		Type:   transactionType,
-		Length: len(body),
-	})
+	if event.Type == transactionType {
+		err = encodeEnvelopeItem(enc, transactionType, body)
+	} else {
+		err = encodeEnvelopeItem(enc, eventType, body)
+	}
 	if err != nil {
 		return nil, err
 	}
-	// payload
-	err = enc.Encode(body)
-	if err != nil {
-		return nil, err
+
+	// Profile data
+	if event.sdkMetaData.transactionProfile != nil {
+		body, err = json.Marshal(event.sdkMetaData.transactionProfile)
+		if err != nil {
+			return nil, err
+		}
+		err = encodeEnvelopeItem(enc, profileType, body)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return &b, nil
@@ -157,21 +177,14 @@ func getRequestFromEvent(event *Event, dsn *Dsn) (r *http.Request, err error) {
 	if body == nil {
 		return nil, errors.New("event could not be marshaled")
 	}
-	if event.Type == transactionType {
-		b, err := transactionEnvelopeFromBody(event, dsn, time.Now(), body)
-		if err != nil {
-			return nil, err
-		}
-		return http.NewRequest(
-			http.MethodPost,
-			dsn.EnvelopeAPIURL().String(),
-			b,
-		)
+	envelope, err := envelopeFromBody(event, dsn, time.Now(), body)
+	if err != nil {
+		return nil, err
 	}
 	return http.NewRequest(
 		http.MethodPost,
-		dsn.StoreAPIURL().String(),
-		bytes.NewReader(body),
+		dsn.GetAPIURL().String(),
+		envelope,
 	)
 }
 
